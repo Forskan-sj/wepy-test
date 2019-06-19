@@ -1,0 +1,98 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+  <view class="container">
+    <view @tap="getParam({{ mynum }}, 's2', 'sdf')">获取参数</view>
+    <view class="userinfo" @tap="ceshiEvent">
+      测试事件广播
+    </view>
+    <button @tap="sendInvoke">测试$invoke1</button>
+    <ceshi1></ceshi1>
+    <ceshi2></ceshi2>
+    <button @tap="addNum">wepy redux add</button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  import { INCREMENT, DECREMENT } from '../store/types/counter'
+  import ceshi1 from '@/components/ceshi1'
+  import ceshi2 from '@/components/ceshi2'
+  @connect({
+    num (state) {
+      return state.counter.num
+    },
+    asyncNum (state) {
+      return state.counter.asyncNum
+    },
+    sumNum (state) {
+      return state.counter.num + state.counter.asyncNum
+    }
+  }, {
+    icNum: INCREMENT,
+    dcNum: DECREMENT
+  })
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+      ceshi1,
+      ceshi2
+    }
+    data = {
+      // store: getStore(),
+      mynum: 20
+    }
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+      addNum() {
+        this.methods.icNum()
+        console.log(this.num)
+        wepy.$store.dispatch({ type: 'INCREMENT' })
+        console.log(wepy.$store.getState().counter.num)
+      },
+      sendInvoke() {
+        this.$invoke('ceshi1', 'funName', 11, 22)
+      },
+      getParam(p1, p2, p3, e) {
+        console.log(p1, p2, p3, e)
+      },
+      ceshiEvent() {
+        this.$broadcast('ceshievent')
+      }
+    }
+
+    events = {
+      'eEvt': (...args) => {
+        console.log(args)
+      }
+    }
+
+    onLoad() {
+      this.$preload('test', {ss: 'contest', a: 'asdfasdf'})
+    }
+  }
+</script>

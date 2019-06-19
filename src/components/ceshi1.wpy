@@ -1,0 +1,75 @@
+<style lang="less">
+  .mainbk{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    .blank{
+      width: 100%;
+      height: 906rpx;
+      // background: url('https://cdncollege.quansuwangluo.com/mx_college_th/hjyc/shouquan.jpg') no-repeat;
+      // background-size: 100% 100%;
+    }
+    .shouquanblank{
+      width: 90%;
+      height: 100rpx;
+      position: absolute;
+      bottom: 140rpx;
+      left: 5%;
+      color: #fff;
+      line-height: 100rpx;
+      text-align: center;
+      background-color: #C20F23;
+      border-radius: 10rpx;
+    }
+
+  }
+  // .sd{
+  //   background: rgba(0,0,0,0.3);
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   left: 0;
+  //   bottom: 0;
+  //   overflow: scroll;
+  //   // z-index: 100;
+  // }
+</style>
+<template>
+  <view class="sd">
+    <repeat for="{{list}}" index="index" item="item" key="key">
+      <view class="sss" @tap='emite({{ index }})'>ceshi111</view>
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Ceshi2 extends wepy.component {
+    data = {
+      list: [2, 1],
+      layer: false,
+      imgSrc: 'https://cdncollege.quansuwangluo.com/mx_college_th/hjyc/shouquan.jpg'
+    }
+    methods = {
+      emite(index) {
+        console.log('cs1:' + index)
+        const tempData = {
+          a: 'asdf',
+          b: 233,
+          c: {
+            s: 2
+          }
+        }
+        this.$emit('eEvt', tempData)
+      },
+      funName(p1, p2) {
+        console.log('cs1:' + p1, p2)
+      }
+    }
+    events = {
+      'ceshievent': (...args) => {
+        console.log('cs1' + args)
+      }
+    }
+  }
+</script>
