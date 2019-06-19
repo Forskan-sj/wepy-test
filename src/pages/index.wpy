@@ -14,9 +14,14 @@
   .userinfo-nickname {
     color: #aaa;
   }
+  input{
+    border: 1px solid gray;
+  }
 </style>
 <template>
   <view class="container">
+    <input value='{{mynum}}' @input="showNum" type="text">
+    <view class="asdf">{{ mynum }}</view>
     <view @tap="getParam({{ mynum }}, 's2', 'sdf')">获取参数</view>
     <view class="userinfo" @tap="ceshiEvent">
       测试事件广播
@@ -25,6 +30,7 @@
     <ceshi1></ceshi1>
     <ceshi2></ceshi2>
     <button @tap="addNum">wepy redux add</button>
+    <button @tap="getNUm">getInputNum</button>
   </view>
 </template>
 
@@ -68,6 +74,12 @@
     }
 
     methods = {
+      showNum(e) {
+        this.mynum = e.detail.value
+      },
+      getNUm() {
+        console.log(this.mynum)
+      },
       addNum() {
         this.methods.icNum()
         console.log(this.num)
@@ -75,7 +87,8 @@
         console.log(wepy.$store.getState().counter.num)
       },
       sendInvoke() {
-        this.$invoke('ceshi1', 'funName', 11, 22)
+        this.$invoke('ceshi1', 'funName', this.mynum, 22)
+        this.mynum = 444
       },
       getParam(p1, p2, p3, e) {
         console.log(p1, p2, p3, e)
