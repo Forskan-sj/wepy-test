@@ -1,0 +1,307 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.container-page{
+  text-align: center;
+  height: 100%;
+  background: white;
+  .detail{
+    background: white;
+    margin-top: 10/@p;
+    .itemContent{
+      border-bottom: 1px solid #EEEEEE;
+      display: flex;
+      padding: 15/@p 13/@p 0 8/@p;
+      .pic{
+        width: 86/@p;
+        height: 86/@p;
+        image{
+          width: 100%;
+          height: 73/@p;
+          align-self: center;
+        }
+      }
+      .detail{
+        flex: 1;
+        margin: 0 15/@p;
+        text-align: left;
+        .title{
+          color: #333333;
+          font-size: 14/@p;
+        }
+        .des{
+          color: #9B9B9B;
+          font-size: 12/@p;
+        }
+      }
+      .status{
+        // width: 70/@p;
+        text-align: right;
+        .price{
+          font-weight: 600;
+          color: #111111;
+          font-size: 14/@p;
+        }
+        .num{
+          color: #9B9B9B;
+          font-size: 11/@p;
+        }
+      }
+    }
+
+
+  }
+  .formRow{
+    margin: 0 11/@p;
+    display: flex;
+    justify-content: space-between;
+    height: 40/@p;
+    line-height: 40/@p;
+    font-size: 15/@p;
+    .title{
+      color: #7B7B7B;
+    }
+    .content{
+      font-weight: 600;
+      color: #111111;
+    }
+    .paynum{
+      color: #D49364;
+    }
+  }
+  .btop{
+    border-bottom: 1px solid #EEEEEE;
+  }
+  .infos{
+    background: white;
+    margin-top: 10/@p;
+    .formRow{
+      .content{
+        color: #7B7B7B;
+      }
+    }
+  }
+  .options{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 51/@p;
+    background: white;
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: center;
+    view{
+      align-self: center;
+    }
+    .subCard{
+      height: 100%;
+      width: 130/@p;
+      font-size: 15/@p;
+      background-image: linear-gradient(-90deg, #47484D 0%, #1E1F24 100%);
+      color: white;
+      line-height: 51/@p;
+    }
+    .totalPrice{
+      font-size: 18/@p;
+      color: #D49364;
+      margin: 0 17/@p 0 7/@p;
+    }
+    .text{
+      font-size: 14/@p;
+      color: #676767;
+    }
+  }
+  .forpos{
+    background: #F5F5F5;
+    height: 12/@p;
+  }
+  .block{
+    .chooseaddress{
+      // height: 30/@p;
+      padding: 10/@p 13/@p;
+      display: flex;
+      justify-content: space-between;
+      view{
+        align-self: center;
+      }
+      .text{
+        color: #666666;
+        font-size: 13/@p;
+      }
+      .rightIcon{
+        width: 10/@p;
+        height: 10/@p;
+        border-top: 1px solid #666666;
+        border-left: 1px solid #666666;
+        transform: rotateZ(135deg);
+      }
+    }
+    .infos{
+      text-align: left;
+      .namtel{
+        color: #333333;
+        font-size: 17/@p;
+        font-weight: 600;
+        margin-bottom: 8/@p;
+      }
+      .defaultAddress{
+        color: #7B7B7B;
+        font-size: 13/@p;
+        // padding: 0 20/@p 0 8/@p;
+      }
+    }
+
+    image{
+      height: 3/@p;
+      width: 371/@p;
+    }
+    .liuyan{
+      padding: 10/@p 13/@p;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14/@p;
+      .text{
+        color: #333333;
+      }
+      input{
+        text-align: right;
+        color: #333333;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="container-page">
+    <view class="forpos"/>
+    <view class="block">
+      <view class="chooseaddress" @tap.stop="gopage">
+        <view wx:if="{{!ceshi}}" class="text">请选择地址</view>
+        <view wx:else class="infos">
+          <view class="namtel">{{infos.name + '      ' + infos.mobile}}</view>
+          <view class="defaultAddress">{{infos.address}}</view>
+        </view>
+        <view class="rightIcon"/>
+      </view>
+
+      <image src="https://cdn.quansuwangluo.com/shuimeiren/prog.png"/>
+      <view class="liuyan">
+        <view class="text">买家留言：</view>
+        <input type="text" placeholder="填写您的需求">
+      </view>
+    </view>
+    <view class="forpos"/>
+    <view class="detail">
+      <view class="itemContent">
+        <view class="pic">
+          <image src="{{goodsInfo.icon}}"/>
+        </view>
+        <view class="detail">
+          <view class="title">{{goodsInfo.gname}}</view>
+          <view class="des">{{goodsInfo.gsize}}</view>
+        </view>
+        <view class="status">
+          <view class="price">{{'￥ ' + goodsInfo.gPrice}}</view>
+          <view class="num">{{'X ' + goodsInfo.gNum }}</view>
+        </view>
+      </view>
+      <view class="formRow btop">
+        <view class="title">商品总价</view>
+        <view class="content">{{'￥ ' + goodsInfo.totalPrice}}</view>
+      </view>
+      <view class="formRow btop">
+        <view class="title">商品运费</view>
+        <view class="content">{{'￥ ' + goodsInfo.yunfei}}</view>
+      </view>
+    </view>
+    <view class="options">
+      <view class="subCard" @tap.stop="subCard">提交订单</view>
+      <view class="totalPrice">{{'￥' + goodsInfo.totalPrice}}</view>
+      <view class="text">合计</view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class ConfirmCard extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的订单'
+  }
+  components = {
+  }
+  data = {
+    ceshi: true,
+    infos: {
+      name: 'lasdj',
+      mobile: 123456789,
+      address: '山东省临沂市河东区金华路2号沐熙集团',
+      bei: '请尽快发货'
+    },
+    goodsInfo: {
+      icon: '../images/avatar/sls.jpg',
+      gname: '睡美人小分子易吸收胶原蛋白 液态饮品一盒6',
+      gsize: '一盒6瓶',
+      gPrice: '358.90',
+      gNum: '1',
+      totalPrice: '358.90',
+      yunfei: '358.90',
+      order: '358.90',
+      cardNum: '23742398493826489',
+      cardTime: '2019-01-22 11:36:00'
+    }
+  }
+  methods = {
+    subCard() {
+      wepy.showModal({
+        content: '订单已提交',
+        confirmText: '查看订单',
+        confirmColor: '#676767',
+        cancelText: '继续购物',
+        cancelColor: '#D49364'
+      }).then((res) => {
+        if (res.cancel) {
+          console.log('success')
+        } else {
+          console.log('fail')
+          wepy.navigateTo({
+            url: 'mylist'
+          })
+        }
+      })
+    },
+    goPay() {
+      // getData({ num: '312' }).then((res) => {
+      //   wepy.requestPayment(res.data).then((res2) => {
+      //     wepy.showToast({title: '支付成功，等待卖家发货！'})
+      //   })
+      // })
+    },
+    cancelCard() {
+      wepy.showModal({
+        content: '确定要取消订单吗？',
+        confirmText: '取消订单',
+        confirmColor: '#676767',
+        cancelText: '继续购物',
+        cancelColor: '#D49364'
+      }).then((res) => {
+        if (res.cancel) {
+          console.log('success')
+        } else {
+          console.log('fail')
+        }
+      })
+    },
+    gopage() {
+      wepy.navigateTo({
+        url: 'addList'
+      })
+    },
+    lookWhere() {
+      wepy.navigateTo({
+        url: 'wuliu'
+      })
+    }
+  }
+}
+</script>

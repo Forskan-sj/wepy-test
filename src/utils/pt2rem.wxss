@@ -1,0 +1,38 @@
+.itemContent {
+  border-bottom: 1px solid #EEEEEE;
+  display: flex;
+  padding: 30rpx 26rpx 0 16rpx;
+}
+.itemContent .pic {
+  width: 172rpx;
+  height: 172rpx;
+}
+.itemContent .pic image {
+  width: 100%;
+  height: 146rpx;
+  align-self: center;
+}
+.itemContent .detail {
+  flex: 1;
+  margin: 0 30rpx;
+  text-align: left;
+}
+.itemContent .detail .title {
+  color: #333333;
+  font-size: 28rpx;
+}
+.itemContent .detail .des {
+  color: #9B9B9B;
+  font-size: 24rpx;
+}
+.itemContent .status {
+  text-align: right;
+}
+.itemContent .status .price {
+  color: #111111;
+  font-size: 28rpx;
+}
+.itemContent .status .num {
+  color: #9B9B9B;
+  font-size: 22rpx;
+}

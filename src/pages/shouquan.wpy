@@ -1,0 +1,62 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.container-page{
+  text-align: center;
+  height: 100%;
+  background: #F5F5F5;
+
+}
+</style>
+<template>
+  <view class="container-page">
+    <button class="btn1" open-type="getUserInfo" @getuserinfo="bindInfo" type="primary">登录</button>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { showTos, setCache, removeCache } from '../utils/utils'
+import { Login } from '@/api'
+export default class ShouQuan extends wepy.page {
+  config = {
+    navigationBarTitleText: '授权'
+  }
+  components = {
+  }
+  data = {
+    uInfo: {},
+    param: {
+      code: '',
+      encryptedData: '',
+      iv: ''
+    }
+  }
+  methods = {
+    bindInfo(e) {
+      const self = this
+      if (e.detail.userInfo) {
+        this.uInfo = e.detail.userInfo
+        this.param = {
+          code: '',
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv
+        }
+        wepy.login().then((res) => {
+          if (res.code) {
+            self.param.code = res.code
+            Login(self.param).then((re) => {
+              setCache('sid', re.sid)
+              wepy.navigateBack({
+                delta: -1
+              })
+            })
+          } else {
+            showTos('登陆失败' + res.errMsg)
+          }
+        })
+      }
+      // removeCache('sid')
+    }
+  }
+}
+</script>

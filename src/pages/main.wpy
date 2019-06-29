@@ -1,0 +1,182 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.contain{
+  // height: 30rpx;
+  // width: 30/@p;
+  text-align: center;
+  height: 100%;
+  .contain_top{
+    .top{
+      position: relative;
+      .swiper{
+        height: 203/@p;
+      }
+      .top_text{
+        position: absolute;
+        bottom: 21/@p;
+        right: 25/@p;
+        color: #FFFFFF;
+        font-size: 12/@p;
+        background: rgba(0,0,0,.2);
+        width: 35/@p;
+        height: 21/@p;
+        line-height: 21/@p;
+        text-align: center;
+        border-radius: 11/@p;
+      }
+      .pos{
+        background: #F5F5F5;
+        height: 10/@p;
+      }
+    }
+    .center{
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: 80/@p;
+      .center_box{
+        border: 1px solid #E9E9E9;
+        margin: 10/@p 0 30/@p 10/@p;
+        width: 171/@p;
+        height: 241/@p;
+        .center_box_img{
+          width: 171/@p;
+          height: 133/@p;
+        }
+        .center_box_div{
+
+          .center_box_title{
+            color: #333333;
+            font-size: 14/@p;
+          }
+          .center_box_content{
+            color: #999999;
+            font-size: 11/@p;
+            margin-top: 4/@p;
+          }
+          .center_box_money{
+            margin-top: 11/@p;
+            color: #D49364;
+            font-size: 16/@p;
+          }
+        }
+        .setp{
+          width: 121/@p;
+          background: #F5F5F5;
+          margin: 28/@p auto 0 auto;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+  .bottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(-90deg, #47484D 0%, #1E1F24 100%);
+    color: white;
+    line-height: 51/@p;
+    font-size: 15/@p;
+    height: 51/@p;
+
+  }
+
+}
+</style>
+<template>
+  <view class="contain">
+    <view class="contain_top">
+      <view class="top">
+        <!-- <swiper catchtap="onSwiperTap" vertical="{{false}}" indicator-dots="true" autoplay="true" interval="5000" wx:for="{{postList}}" wx:for-item="item" wx:for-index="idx">
+          <swiper-item>
+            <image id="7" src="{{item.image}}" data-id='3'></image>
+          </swiper-item>
+        </swiper> -->
+        <swiper
+          @change="onSwiperTap"
+          vertical="{{false}}"
+          indicator-dots="{{false}}"
+          autoplay="true"
+          circular="true"
+          interval="5000"
+          class="swiper"
+        >
+          <repeat for="{{img_list}}" index="index" item="item" key="key">
+            <swiper-item>
+              <image class="top_img" src="{{item.image}}"/>
+            </swiper-item>
+          </repeat>
+        </swiper>
+        <view class="top_text">
+          <span>{{swipeIndex + '/' + img_list.length}}</span>
+        </view>
+        <view class="pos"/>
+      </view>
+      <view class="center">
+        <repeat for="{{goodList}}" index="index" item="item" key="key">
+          <view class="center_box">
+            <image @tap.stop="goDetail({{index}})" class="center_box_img" src="{{ item.goods_image }}"/>
+            <view @tap.stop="goDetail({{index}})" class="center_box_div">
+              <view class="center_box_title">{{item.goods_name}}</view>
+              <view class="center_box_content">卓越工艺品质</view>
+              <view class="center_box_money">{{'￥ ' + item.price }}</view>
+            </view>
+            <view class="setp" @tap.stop=''>
+              <van-stepper min="0" @change="onChange({{index}})" />
+            </view>
+          </view>
+        </repeat>
+      </view>
+    </view>
+    <view class="bottom">
+      <span>结算:</span>
+      <span class="botton_money">￥1050</span>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { getMainDatas } from '@/api'
+export default class Main extends wepy.page {
+  config = {
+    navigationBarTitleText: '睡美人系统',
+    usingComponents: {
+      'van-stepper': '../components/van/stepper/index'
+    }
+  }
+  components = {
+  }
+  data = {
+    bshowM: false,
+    // store: getStore(),
+    img_list: [],
+    goodList: [],
+    swipeIndex: 1
+  }
+  methods = {
+    goDetail(index) {
+      // console.log(index)
+      // wepy.navigateTo({
+      //   url: 'goodDetail'
+      // })
+    },
+    onChange(index, e) {
+      // const self = this
+      console.log(index, e.detail)
+    },
+    onSwiperTap(e) {
+      this.swipeIndex = e.detail.current + 1
+    }
+  }
+  onLoad() {
+    getMainDatas({}).then((res) => {
+      console.log(res)
+      this.img_list = res.data.ads
+      this.goodList = res.data.goods
+      this.$apply()
+    })
+  }
+}
+</script>

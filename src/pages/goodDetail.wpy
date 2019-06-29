@@ -1,0 +1,389 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.hiddens{
+  overflow: hidden;
+}
+.contain{
+  // height: 30rpx;
+  // width: 30/@p;
+  text-align: center;
+  height: 100%;
+  // overflow: hidden;
+  .contain_top{
+    .top{
+      position: relative;
+      .swiper{
+        height: 375/@p;
+        .swiper-item{
+          height: 100%;
+          display: flex;
+          align-self: center;
+
+        }
+        .box{
+          height: 375/@p;
+          background: #F8F8F8;
+          display: flex;
+          justify-content: space-around;
+          .top_img{
+            // height: 200/@p;
+            width: 80%;
+            margin: 0 auto;
+            align-self: center;
+          }
+        }
+      }
+      .top_text{
+        position: absolute;
+        bottom: 21/@p;
+        right: 25/@p;
+        color: #FFFFFF;
+        font-size: 12/@p;
+        background: rgba(0,0,0,.5);
+        width: 35/@p;
+        height: 21/@p;
+        line-height: 21/@p;
+        text-align: center;
+        border-radius: 11/@p;
+      }
+      .pos{
+        background: #F5F5F5;
+        height: 10/@p;
+      }
+    }
+    .center{
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: 80/@p;
+      .center_box{
+        border: 1px solid #E9E9E9;
+        margin: 10/@p 0 30/@p 10/@p;
+        width: 171/@p;
+        height: 241/@p;
+        .center_box_img{
+          width: 171/@p;
+          height: 133/@p;
+        }
+        .center_box_div{
+
+          .center_box_title{
+            color: #333333;
+            font-size: 14/@p;
+          }
+          .center_box_content{
+            color: #999999;
+            font-size: 11/@p;
+            margin-top: 4/@p;
+          }
+          .center_box_money{
+            margin-top: 11/@p;
+            color: #D49364;
+            font-size: 16/@p;
+          }
+        }
+        .setp{
+          width: 121/@p;
+          background: #F5F5F5;
+          margin: 28/@p auto 0 auto;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+  .bottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-left: 25/@p;
+    right: 0;
+    background: white;
+    display: flex;
+    color: #666666;
+    line-height: 51/@p;
+    font-size: 15/@p;
+    height: 51/@p;
+    justify-content: space-between;
+    view{
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+    }
+    .text{
+      text-align: center;
+      font-size: 10/@p;
+      color: #666666;
+      line-height: 11/@p;
+    }
+    image{
+      width: 26/@p;
+      height: 26/@p;
+    }
+
+  }
+  .hideBtn{
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    z-index: 2;
+    width: 80/@p;
+    left: 60/@p;
+    opacity: 0;
+  }
+  .custom-class{
+    background: transparent;
+  }
+  .gobuy{
+    width: 216/@p;
+    height: 100%;
+    // background: #1E1F24;
+    background-image: linear-gradient(-90deg, #47484D 0%, #1E1F24 100%);
+    color: white;
+  }
+  .popDIV{
+    background: white;
+    padding: 25/@p 13/@p 0 13/@p;
+    border-radius: 10/@p 10/@p 0/@p 0/@p;
+    position: relative;
+    .closeBtn{
+      position: absolute;
+      top: 15/@p;
+      right: 15/@p;
+      width: 21/@p;
+      height: 21/@p;
+      background: url(https://cdncollege.quansuwangluo.com/image/shuimeiren/close.png) no-repeat !important;
+      background-size: 100% 100% !important;
+    }
+    .detail{
+      .price{
+        color: #D49364;
+        font-size: 18/@p;
+      }
+    }
+    .guige{
+      padding-bottom: 16/@p;
+      border-bottom: 1px solid #E5E5E5;
+
+      .guigelist{
+        display: flex;
+        .lradio{
+          width: 60/@p;
+          height: 28/@p;
+          border-radius: 14/@p;
+          text-align: center;
+          line-height: 28/@p;
+          font-size: 12/@p;
+          background: #EEEEEE;
+          color: #999999;
+          margin-right: 15/@p;
+        }
+        .disabled{
+          background: #EEEEEE;
+          color: #D2D2D2;
+        }
+        .active{
+          background: #1E1F24;
+          color: white;
+        }
+      }
+    }
+    .text{
+      color: #999999;
+      font-size: 13/@p;
+      text-align: left;
+      margin: 9/@p auto;
+    }
+    .count{
+      display: flex;
+      justify-content: space-between;
+      height: 60/@p;
+      view{
+        align-self: center;
+      }
+      .text{
+        margin: 0;
+      }
+      .setp{
+        height: 32/@p;
+        width: 121/@p;
+        background: #F5F5F5;
+        // margin: 28/@p auto 0 auto;
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+    .bcertain{
+      width: 375/@p;
+      margin: 0 -13/@p;
+      color: white;
+      line-height: 51/@p;
+      font-size: 15/@p;
+      height: 51/@p;
+    }
+  }
+}
+</style>
+<template>
+  <view class="contain {{show ? 'hiddens' : ''}}">
+    <view class="contain_top">
+      <view class="top">
+        <swiper
+          @change="onSwiperTap"
+          vertical="{{false}}"
+          indicator-dots="{{false}}"
+          autoplay="true"
+          circular="true"
+          interval="5000"
+          class="swiper"
+        >
+          <repeat for="{{img_list}}" index="index" item="item" key="key">
+            <swiper-item>
+              <view class="box">
+                <image class="top_img" src="../images/avatar/sls.jpg"/>
+              </view>
+            </swiper-item>
+          </repeat>
+        </swiper>
+        <view class="top_text">
+          <span>{{swipeIndex + '/' + img_list.length}}</span>
+        </view>
+        <view class="pos"/>
+      </view>
+      <view class="center">
+        <repeat for="{{img_list}}" index="index" item="item" key="key">
+          <view class="center_box">
+            <image class="center_box_img" src="../images/avatar/sls.jpg"/>
+            <view class="center_box_div">
+              <view class="center_box_title">经典商务茶具茶杯</view>
+              <view class="center_box_content">卓越工艺品质</view>
+              <view class="center_box_money">￥350.00</view>
+            </view>
+            <view class="setp">
+              <van-stepper value="{{ 1 }}" bind:change="onChange" />
+            </view>
+          </view>
+        </repeat>
+      </view>
+    </view>
+    <view class="bottom">
+      <view class="mainPage" @tap.stop="gopage('main')">
+        <image src="https://cdn.quansuwangluo.com/shuimeiren/mainpage.png"/>
+        <view class="text">首页</view>
+      </view>
+      <view class="kefu">
+        <image src="https://cdn.quansuwangluo.com/shuimeiren/assis.png"/>
+        <view class="text">客服</view>
+        <button class="hideBtn" open-type="contact"></button>
+      </view>
+      <view class="gobuy" @tap.stop='showPop'>
+        立即购买
+      </view>
+    </view>
+    <van-popup show="{{ show }}" custom-class position="bottom" bind:close="onClose">
+      <view class="popDIV">
+        <view class="closeBtn" @tap.stop="onClose"/>
+        <view class="itemContent">
+          <view class="pic">
+            <image src="{{goodsInfo.icon}}"/>
+          </view>
+          <view class="detail">
+            <view class="title">{{goodsInfo.gname}}</view>
+            <view class="price">{{'￥ ' + goodsInfo.gPrice}}</view>
+            <view class="des">{{'已选择 ' + goodsInfo.gsize}}</view>
+          </view>
+        </view>
+        <view class="guige">
+          <view class="text">规格</view>
+          <view class="guigelist">
+            <repeat for="{{goodsInfo.sizeList}}" index="index" item="item" key="key">
+              <view class="lradio {{ item.mark === 0 ? 'disabled' : sizeIndex === index ? 'active' : '' }}" @tap.stop='selSize({{index}})'>
+                {{item.name}}
+              </view>
+            </repeat>
+          </view>
+        </view>
+        <view class="count">
+          <view class="text">购买数量</view>
+          <view class="setp">
+            <van-stepper value="{{ 1 }}" @change="onChange"/>
+          </view>
+        </view>
+        <view class="gobuy bcertain" @tap="subData">确定</view>
+      </view>
+    </van-popup>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class GoodDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '商品详情',
+    usingComponents: {
+      'van-stepper': '../components/van/stepper/index',
+      'van-popup': '../components/van/popup/index'
+    }
+  }
+  components = {
+  }
+  data = {
+    // store: getStore(),
+    show: false,
+    img_list: [1, 2, 3, 4, 5],
+    swipeIndex: 1,
+    sizeIndex: 0,
+    goodsInfo: {
+      icon: '../images/avatar/sls.jpg',
+      gname: '睡美人小分子易吸收胶原蛋白 液态饮品一盒6',
+      gsize: '一盒6瓶',
+      gPrice: '358.90',
+      gNum: '1',
+      totalPrice: '358.90',
+      yunfei: '358.90',
+      order: '358.90',
+      sizeList: [{
+        name: '一盒6瓶',
+        mark: 1
+      }, {
+        name: '一盒12瓶',
+        mark: 1
+      }, {
+        name: '一盒18瓶',
+        mark: 0
+      }],
+      cardNum: '23742398493826489',
+      cardTime: '2019-01-22 11:36:00'
+    }
+  }
+  methods = {
+    onSwiperTap(e) {
+      this.swipeIndex = e.detail.current + 1
+    },
+    subData() {
+      wepy.navigateTo({
+        url: 'confirmCard'
+      })
+    },
+    gopage(url) {
+      console.log(url)
+      wepy.switchTab({
+        url: 'main'
+      })
+    },
+    onChange(e) {
+      console.log(e.detail)
+    },
+    selSize(index) {
+      if (this.goodsInfo.sizeList[index].mark) {
+        this.sizeIndex = index
+      }
+    },
+    showPop() {
+      this.show = true
+    },
+    onClose() {
+      this.show = false
+    }
+  }
+}
+</script>

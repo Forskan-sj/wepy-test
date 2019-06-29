@@ -1,0 +1,195 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.container-page{
+  text-align: center;
+  height: 100%;
+  background: #F5F5F5;
+  .head{
+    height: 205/@p;
+    // background: url(https://cdncollege.quansuwangluo.com/mx_college_th/image/support.png) no-repeat !important;
+    // background-size: 100% 100% !important;
+    background: linear-gradient(90deg, #1e1f24, #48494e);
+    .userwrap{
+      display: flex;
+      align-items: center;
+      padding: 73/@p 0 17/@p 25/@p;
+      .avatar{
+        width: 69/@p;
+        height: 69/@p;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        background-color: #a1a1a1;
+        overflow: hidden;
+      }
+      .right{
+        margin-left: 22/@p;
+        .name{
+          line-height: 28/@p;
+          font-size: 20/@p;
+          // font-weight: 700;
+          color: #fff;
+        }
+        .rankwrap{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 83/@p;
+          height: 20/@p;
+          margin-top: 5/@p;
+          border-radius: 10/@p;
+          background: rgba(255, 255, 255, 0.1);
+          .icon{
+            width: 16/@p;
+            height: 19/@p;
+            // background-color: #fff;
+            background: url(https://cdn.quansuwangluo.com/shuimeiren/medal.png) no-repeat !important;
+            background-size: 100% 100% !important;
+          }
+          .text{
+            margin-left: 2/@p;
+            font-size: 13/@p;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(180deg, rgba(254, 255, 216, 1) 0%, rgba(255, 216, 109, 1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        }
+      }
+    }
+    .progress{
+      width: 312/@p;
+      height: 2/@p;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.5);
+      .bar{
+        position: absolute;
+        height: 2/@p;
+        background-color: #f6caa9;
+      }
+    }
+    .descwrap{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30/@p;
+      margin-top: 10/@p;
+      font-size: 12/@p;
+      color: #9e9ea1;
+    }
+  }
+  .menuwrap{
+    background: white;
+    display: flex;
+    flex-wrap: wrap;
+    .menui{
+      width: 49.8%;
+      align-self: center;
+      display: flex;
+      justify-content: space-around;
+      .items{
+        padding: 10/@p 0 20/@p 0;
+      }
+      .top_img{
+        width: 86/@p;
+        height: 85/@p;
+      }
+      .text{
+        margin-top: -18/@p;
+        font-size: 14/@p;
+        color: #333333;
+      }
+      &:nth-child(2), &:nth-child(4){
+        border-left: 1px solid #E5E5E5;
+      }
+      &:nth-child(3), &:nth-child(4){
+        border-top: 1px solid #E5E5E5;
+      }
+    }
+  }
+  .pos{
+    background: #F5F5F5;
+    height: 10/@p;
+  }
+}
+</style>
+<template>
+  <view class="container-page">
+    <view class="head">
+      <view class="userwrap">
+        <view class="avatar">
+          <open-data type="userAvatarUrl" mode="cover"></open-data>
+        </view>
+        <view class="right">
+          <view class="name">凯特莉娜</view>
+          <view class="rankwrap">
+            <view class="icon"></view>
+            <view class="text">黄金会员</view>
+          </view>
+        </view>
+      </view>
+      <view class="progress">
+        <view class="bar" style="width:66%"></view>
+      </view>
+      <view class="descwrap">
+        <view>距离升级V2还差 300元</view>
+        <view>2600/2900</view>
+      </view>
+    </view>
+    <!-- ------header END------ -->
+    <view class="pos"/>
+    <view class="menuwrap">
+      <repeat for="{{menu}}" index="index" item="item" key="key">
+        <view @tap="gopage({{item.url}})" class="menui">
+          <view class="items">
+            <image class="top_img" src="{{baseUrl + item.icon}}"/>
+            <view class="text">{{item.text}}</view>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class UserInfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '睡美人系统',
+    usingComponents: {
+      'van-stepper': '../components/van/stepper/index'
+    },
+    navigationStyle: 'custom'
+  }
+  components = {
+  }
+  data = {
+    // store: getStore(),
+    baseUrl: 'https://cdn.quansuwangluo.com/shuimeiren/',
+    menu: [{
+      icon: 'i-menu.png',
+      text: '我的订单',
+      url: 'mylist'
+    }, {
+      icon: 'i-update.png',
+      text: '升级进阶',
+      url: 'b'
+    }, {
+      icon: 'i-invite.png',
+      text: '邀请好友',
+      url: 'c'
+    }, {
+      icon: 'i-system.png',
+      text: '系统说明',
+      url: 'd'
+    }]
+  }
+  methods = {
+    gopage(url) {
+      wepy.navigateTo({
+        url: url
+      })
+    }
+  }
+}
+</script>

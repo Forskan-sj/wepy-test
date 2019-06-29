@@ -1,0 +1,106 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.container-page{
+  text-align: center;
+  // height: 100%;
+  background: #F5F5F5;
+
+}
+.tab-active-class{
+  color: #D49364 !important;
+}
+.grayBk{
+  background: #F5F5F5;
+}
+</style>
+<template>
+  <view class="container-page">
+    <van-tabs tab-active-class color='#D49364' animated sticky @change="tabsClick">
+      <van-tab title="全部">
+        <Dd1 :obj.sync="allData"></Dd1>
+      </van-tab>
+      <van-tab title="待付款">
+        <Dd2 :obj.sync="unPay"></Dd2>
+      </van-tab>
+      <van-tab title="待发货">
+        <Dd3 :obj.sync="unSend"></Dd3>
+      </van-tab>
+      <van-tab title="待收货">
+        <Dd4 :obj.sync="unGet"></Dd4>
+      </van-tab>
+    </van-tabs>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Dd from '@/components/dd'
+export default class MyList extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的订单',
+    usingComponents: {
+      'van-tab': '../components/van/tab/index',
+      'van-tabs': '../components/van/tabs/index'
+    }
+  }
+  components = {
+    Dd1: Dd,
+    Dd2: Dd,
+    Dd3: Dd,
+    Dd4: Dd
+  }
+
+  data = {
+    allData: [],
+    unPay: [],
+    unSend: [],
+    unGet: [],
+    tabsIndex: 0,
+    testObj: [{
+      card: 212211221221,
+      icon: '../images/avatar/sls.jpg',
+      price: 2323,
+      title: '睡美人小分子易吸收胶原蛋白 液态饮品一盒6',
+      size: '一盒6瓶',
+      kind: 0,
+      num: 1
+    }, {
+      card: 212211221222,
+      icon: '../images/avatar/sls.jpg',
+      price: 2323,
+      title: '睡美人小分子易吸收胶原蛋白 液态饮品一盒6',
+      size: '一盒6瓶',
+      kind: 1,
+      num: 1
+    }, {
+      card: 212211221223,
+      icon: '../images/avatar/sls.jpg',
+      price: 2323,
+      title: '睡美人小分子易吸收胶原蛋白 液态饮品一盒6',
+      size: '一盒6瓶',
+      kind: 2,
+      num: 1
+    }, {
+      card: 212211221224,
+      icon: '../images/avatar/sls.jpg',
+      price: 2323,
+      title: '睡美人小分子易吸收胶原蛋白 液态饮品一盒6',
+      size: '一盒6瓶',
+      kind: 3,
+      num: 1
+    }],
+    pa2: []
+  }
+  methods = {
+    tabsClick(e) {
+      this.tabsIndex = e.detail.index
+    }
+  }
+  onLoad() {
+    this.allData = this.testObj
+    this.unPay = [this.testObj[1]]
+    this.unSend = [this.testObj[2]]
+    this.unGet = [this.testObj[3]]
+  }
+}
+</script>

@@ -3,14 +3,25 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": false,
+		"enhance": false,
 		"postcss": false,
-		"minified": false,
+		"minified": true,
 		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
 		"autoAudits": false,
-		"checkInvalidKey": true
+		"uglifyFileName": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
-	"appid": "wx3064a70849d12152",
+	"appid": "wxa552f10566e8e293",
 	"projectname": "wepytest",
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
@@ -35,10 +46,17 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "114",
 					"pathName": "pages/shouquan",
 					"query": "id=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "wode",
+					"pathName": "pages/userInfo",
+					"query": "",
 					"scene": null
 				}
 			]

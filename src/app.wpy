@@ -1,4 +1,8 @@
 <style lang="less">
+@import "./utils/pt2rem.less";
+page{
+  height: 100%;
+}
 .container {
   height: 100%;
   display: flex;
@@ -6,6 +10,43 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+}
+image{
+  width: 100%;
+}
+.form{
+  margin-top: 10/@p;
+  .formRow{
+    display: flex;
+    height: 45/@p;
+    line-height: 45/@p;
+    background: white;
+    padding: 0 12/@p;
+    justify-content: space-between;
+    font-size: 14/@p;
+    >view{
+      align-self: center;
+    }
+    .ltitle{
+      color: #000000;
+    }
+    input{
+      flex: 1;
+      text-align: right;
+      align-self: center;
+    }
+    .sd{
+      height: 35/@p;
+    }
+    +.formRow{
+      border-top: 1px solid #EEEEEE;
+    }
+  }
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }
 </style>
 
@@ -15,7 +56,7 @@ import 'wepy-async-function'
 
 import { setStore } from 'wepy-redux'
 import configStore from './store'
-
+import regeneratorRuntime from 'regenerator-runtime'
 const store = configStore()
 setStore(store)
 wepy.$store = store
@@ -23,12 +64,47 @@ wepy.$store = store
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/main',
+      'pages/userInfo',
+      'pages/mylist',
+      'pages/cardDetail',
+      'pages/wuliu',
+      'pages/goodDetail',
+      'pages/address',
+      'pages/addList',
+      'pages/confirmCard',
+      'pages/shouquan'
     ],
+    tabBar: {
+      color: '#666',
+      selectedColor: '#333',
+      borderStyle: 'white',
+      position: 'bottom',
+      list: [
+        {
+          pagePath: 'pages/main',
+          text: '首页',
+          iconPath: 'images/tab/main_off.png',
+          selectedIconPath: 'images/tab/main_on.png'
+        },
+        // {
+        //   pagePath: 'pages/rank/rank',
+        //   text: '排行榜',
+        //   iconPath: 'images/tab/rank_off.png',
+        //   selectedIconPath: 'images/tab/rank_on.png'
+        // },
+        {
+          pagePath: 'pages/userInfo',
+          text: '我的',
+          iconPath: 'images/tab/my_off.png',
+          selectedIconPath: 'images/tab/my_on.png'
+        }
+      ]
+    },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '睡美人系统',
       navigationBarTextStyle: 'black'
     }
   }
@@ -54,7 +130,9 @@ export default class extends wepy.app {
     //   console.log(r);
     // })
   }
-
+  test() {
+    console.log(regeneratorRuntime)
+  }
   sleep (s) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

@@ -1,0 +1,197 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.container-page{
+  text-align: center;
+  height: 100%;
+  background: #F5F5F5;
+  .itemContent{
+    background: white;
+    border-bottom: 1px solid #EEEEEE;
+    display: flex;
+    padding: 15/@p 13/@p 0 8/@p;
+    .pic{
+      width: 86/@p;
+      height: 86/@p;
+      image{
+        width: 100%;
+        height: 73/@p;
+        align-self: center;
+      }
+    }
+    .infos{
+      margin-left: 21/@p;
+      font-size: 13/@p;
+      line-height: 25/@p;
+      color: #676767;
+      text-align: left;
+      .detail{
+        color: #111111;
+        margin: 0;
+        .status{
+          color: #D49364;
+        }
+      }
+      .kuaidi{
+
+      }
+      .cardNum{
+        display: flex;
+        .num{
+
+        }
+        image{
+          margin-left: 12/@p;
+          align-self: center;
+          width: 13/@p;
+          height: 14/@p;
+        }
+      }
+    }
+
+  }
+  .steps{
+    padding: 10/@p 0;
+    margin-top: 10/@p;
+    position: relative;
+    background: white;
+    .leftLine{
+      position: absolute;
+      // height: 100%;
+      margin: 5% 0;
+      left: 31/@p;
+      top: 16/@p;
+      bottom: 13/@p;
+      z-index: 1;
+      width: 2px;
+      background: #111111;
+    }
+    .conDetail{
+      position: relative;
+      z-index: 2;
+      .line{
+        padding: 8/@p 24/@p 5/@p 24/@p;
+        display: flex;
+        image{
+          width: 16/@p;
+          height: 16/@p;
+          align-self: center;
+        }
+        .rightCOn{
+          font-size: 12/@p;
+          color: #676767;
+          text-align: left;
+          margin-left: 10/@p;
+        }
+        .active{
+          color: #D49364;
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="container-page">
+    <view class="itemContent">
+      <view class="pic">
+        <image src="../images/avatar/sls.jpg"/>
+      </view>
+      <view class="infos">
+        <view class="detail">
+          物流状态：
+          <text class="status">运输中</text>
+        </view>
+        <view class="kuaidi">
+          快递公司：圆通快递
+        </view>
+        <view class="cardNum">
+          <view class="num">快递单号：141234123412341</view>
+          <image src="https://cdn.quansuwangluo.com/shuimeiren/copy.png" @tap.stop="setClipboard"/>
+        </view>
+      </view>
+
+    </view>
+    <view class="steps">
+      <view class="leftLine"/>
+      <view class="conDetail">
+        <repeat for="{{steps}}" index="index" item="item" key="key">
+          <view class="line">
+            <image src="{{active !== index ? 'https://cdncollege.quansuwangluo.com/image/shuimeiren/posg.png' : 'https://cdn.quansuwangluo.com/shuimeiren/point.png'}}"/>
+            <view class="rightCOn {{active === index ? 'active' : ''}}">
+              <view>{{item.text}}</view>
+              <view class="asdf">{{item.desc}}</view>
+            </view>
+          </view>
+        </repeat>
+      </view>
+
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class WuLiu extends wepy.page {
+  config = {
+    navigationBarTitleText: '查看物流',
+    usingComponents: {
+      'van-steps': '../components/van/steps/index'
+    }
+  }
+  components = {
+  }
+  data = {
+    active: 0,
+    steps: [
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转一',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转二',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转三',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转四',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转三',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转四',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转三',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转四',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转三',
+        desc: '2018-03-09 08:45:56'
+      },
+      {
+        text: '由【福建泉州市航空部】发往【山东临沂航空部】中转四',
+        desc: '2018-03-09 08:45:56'
+      }
+    ]
+  }
+  methods = {
+    setClipboard() {
+      wepy.setClipboardData({
+        data: 'test'
+      }).then((res) => {
+      })
+    }
+  }
+}
+</script>

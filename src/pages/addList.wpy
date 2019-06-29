@@ -1,0 +1,215 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.contain{
+  text-align: center;
+  height: 100%;
+  background: #F5F5F5;
+  padding-top: 10/@p;
+  .litem{
+    background: white;
+    padding: 16/@p 3/@p 10/@p 12/@p;
+    margin-top: 10/@p;
+    text-align: left;
+    .namtel{
+      display: flex;
+      vertical-align: bottom;
+      .name{
+        color: #000000;
+        font-size: 18/@p;
+      }
+      .tel{
+        margin-left: 8/@p;
+        color: #9B9B9B;
+        font-size: 12/@p;
+        line-height: 30/@p;
+      }
+    }
+    .address{
+      color: #676767;
+      font-size: 13/@p;
+      margin: 15/@p 0;
+    }
+    .options{
+      border-top: 1px solid #EEEEEE;
+      display: flex;
+      height: 56/@p;
+      .defaultIcon{
+        flex: 1;
+        display: flex;
+        // width: 15/@p;
+        height: 50/@p;
+        image{
+          align-self: center;
+          width: 15/@p;
+          height: 15/@p;
+        }
+      }
+      view{
+        align-self: center;
+      }
+      image{
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .optIcon{
+        margin: 0 19/@p 0 17/@p;
+        width: 20/@p;
+        height: 20/@p;
+      }
+      .text{
+        color: #111111;
+        font-size: 13/@p;
+        line-height: 18/@p;
+        margin-left: 8/@p;
+      }
+    }
+  }
+  .bottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    right: 0;
+    color: #666666;
+    line-height: 51/@p;
+    font-size: 15/@p;
+    height: 51/@p;
+    display: flex;
+    background: #dddddd;
+    color: #333333;
+    view{
+      width: 50%;
+    }
+    .addnew{
+      background-image: linear-gradient(-90deg, #F9B787 0%, #D49364 100%);
+      color: white;
+    }
+    .addwx{
+      background-image: linear-gradient(-90deg, #47484D 0%, #1E1F24 100%);
+      color: white;
+      position: relative;
+      .addfwx{
+        height: 100%;
+        width: 100%;
+      }
+      button{
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        opacity: 0;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="contain">
+    <repeat for="{{list}}" index="index" item="item" key="key">
+      <view class="litem">
+        <view class="asdf" @tap.stop="goback">
+          <view class="namtel">
+            <view class="name">{{item.name}}</view>
+            <view class="tel">{{item.mobile}}</view>
+          </view>
+          <view class="address">{{item.address}}</view>
+        </view>
+        <view class="options">
+          <view class="defaultIcon" @tap.stop="setDefault({{index}})">
+            <image src="{{item.default ? 'https://cdn.quansuwangluo.com/shuimeiren/choose.png' : 'https://cdn.quansuwangluo.com/shuimeiren/circle.png'}}"/>
+            <view class="text">默认地址</view>
+          </view>
+          <view class="optIcon" @tap.stop="gopage({{index}})">
+            <image src="https://cdn.quansuwangluo.com/shuimeiren/edit.png"/>
+          </view>
+          <view class="optIcon" @tap.stop="del({{index}})">
+            <image src="https://cdn.quansuwangluo.com/shuimeiren/del.png"/>
+          </view>
+        </view>
+      </view>
+    </repeat>
+    <view class="bottom">
+      <view class="addnew" @tap.stop="gopage('1')" >新增收货地址</view>
+      <view class="addwx">
+        <view class="addfwx">微信添加</view>
+        <button @tap.stop="getAddress">33333</button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import address from '../utils/address'
+export default class AddList extends wepy.page {
+  config = {
+    navigationBarTitleText: '收货地址',
+    usingComponents: {
+      'van-switch': '../components/van/switch/index',
+      'van-area': '../components/van/area/index',
+      'van-popup': '../components/van/popup/index'
+    }
+  }
+
+  components = {
+  }
+  data = {
+    list: [{
+      name: '阿斯蒂芬',
+      mobile: '1524648525',
+      address: '山东省 临沂市 河东区 金华路与海关路交汇处',
+      default: 1
+    }, {
+      name: '阿斯蒂芬2',
+      mobile: '1524648525',
+      address: '山东省 临沂市 河东区 金华路与海关路交汇处',
+      default: 0
+    }]
+  }
+  showTos(msg) {
+    wepy.showToast({
+      title: msg,
+      icon: 'none'
+    })
+  }
+  methods = {
+    getAddress(e) {
+      console.log(e)
+      // wepy.getSetting().then((res) => {
+      //   console.log(res)
+      // })
+      // wepy.openSetting().then((res) => {
+      //   console.log(res)
+      //   if (!res.authSetting['scope.address']) {
+
+      //   }
+      // })
+    },
+    setDefault(index) {
+      this.list.forEach(it => {
+        it.default = 0
+      })
+      this.list[index].default = 1
+    },
+    del(index) {
+      this.list.splice(index, 1)
+    },
+    goback() {
+      wepy.navigateBack({
+        delta: -1
+      })
+    },
+    gopage(index) {
+      wepy.navigateTo({
+        url: 'address'
+      })
+    }
+  }
+  onLoad() {
+    this.areaList = address
+  }
+}
+</script>

@@ -1,0 +1,246 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.sd{
+  height: 100%;
+  // overflow: hidden;
+  .empty{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    image{
+      width: 311/@p;
+      height: 163/@p;
+      margin: 91/@p 32/@p 0 32/@p;
+    }
+    .text{
+      font-size: 13/@p;
+      color: #7B7B7B;
+    }
+    .poss{
+      flex: 1;
+      background: red;
+      height: 100%;
+    }
+  }
+  .list{
+    .cardItem{
+      background: white;
+      margin-top: 15/@p;
+      .header{
+        display: flex;
+        padding: 8/@p 12/@p;
+        justify-content: space-between;
+        .cardnum{
+          color: #676767;
+          text-align: left;
+          font-size: 12/@p;
+        }
+        .kind{
+          color: #D49364;
+          text-align: right;
+          font-size: 13/@p;
+        }
+      }
+      .itemContent{
+        display: flex;
+        padding: 15/@p 13/@p 0 8/@p;
+        .pic{
+          width: 86/@p;
+          height: 86/@p;
+          image{
+            width: 100%;
+            height: 73/@p;
+            align-self: center;
+          }
+        }
+        .detail{
+          flex: 1;
+          margin: 0 15/@p;
+          text-align: left;
+          .title{
+            color: #333333;
+            font-size: 14/@p;
+          }
+          .des{
+            color: #9B9B9B;
+            font-size: 12/@p;
+          }
+        }
+        .status{
+          // width: 70/@p;
+          text-align: right;
+          .price{
+            color: #111111;
+            font-size: 14/@p;
+          }
+          .num{
+            color: #9B9B9B;
+            font-size: 11/@p;
+          }
+        }
+      }
+      .totalInfo{
+        border-top: 1px solid #E5E5E5;
+        border-bottom: 1px solid #E5E5E5;
+        text-align: right;
+        padding-right: 12/@p;
+        color: #676767;
+        font-size: 10/@p;
+        height: 38/@p;
+        line-height: 38/@p;
+      }
+      .options{
+        height: 51/@p;
+        display: flex;
+        flex-direction: row-reverse;
+        font-size: 13/@p;
+        text-align: center;
+        >view{
+          align-self: center;
+          border-radius: 14/@p;
+          height: 28/@p;
+          line-height: 28/@p;
+          width: 75/@p;
+          margin-right: 16/@p;
+        }
+
+        .cancel{
+          border: 1px solid #9B9B9B;
+          color: #9B9B9B;
+        }
+        .pay{
+          border: 1px solid #D49364;
+          color: #D49364;
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="sd">
+    <view wx:if='{{obj.length == 0}}' class="empty">
+     <image class="emptyimage" src="{{imgSrc}}"/>
+     <view class="text">暂时没有相关订单哦</view>
+     <view class="poss"/>
+    </view>
+    <view class="list">
+      <repeat for="{{obj}}" index="index" item="item" key="key">
+        <view class="cardItem" @tap='gopage({{ index }})'>
+          <view class="header">
+            <view class="cardnum">{{ '订单编号：' + item.card }}</view>
+            <view class="kind">{{kinds[item.kind]}}</view>
+          </view>
+          <view class="itemContent">
+            <view class="pic">
+              <image src="{{item.icon}}"/>
+            </view>
+            <view class="detail">
+              <view class="title">{{item.title}}</view>
+              <view class="des">{{item.size}}</view>
+            </view>
+            <view class="status">
+              <view class="price">{{'￥ ' + item.price}}</view>
+              <view class="num">{{'X ' + item.num }}</view>
+            </view>
+          </view>
+          <view class="totalInfo">
+            {{'共1件商品 合计￥' + item.price }}
+          </view>
+          <view wx:if='{{item.kind !== 0}}' class="options">
+            <view wx:if='{{item.kind == 1}}' class="pay"  @tap.stop="goPay({{index}})">去支付</view>
+            <view wx:if='{{item.kind == 3}}' class="pay"  @tap.stop="certain({{index}})">确认收货</view>
+            <view wx:if='{{item.kind == 1}}' class="cancel"  @tap.stop="cancelCard({{index}})">取消订单</view>
+            <view wx:if='{{item.kind == 2}}' class="cancel"  @tap.stop="alertSend({{index}})">提醒发货</view>
+            <view wx:if='{{item.kind == 3}}' class="cancel"  @tap.stop="lookWhere({{index}})">查看物流</view>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Dd extends wepy.component {
+    data = {
+      kinds: ['已完成', '待付款', '待发货', '待收货'],
+      list: [1, 2],
+      layer: false,
+      imgSrc: 'https://cdn.quansuwangluo.com/shuimeiren/empty.png'
+    }
+
+    props = {
+      obj: {
+        default: []
+      }
+    }
+
+    methods = {
+      goPay(index) {
+        // getData({ num: '312' }).then((res) => {
+        //   wepy.requestPayment(res.data).then((res2) => {
+        //     wepy.showToast({title: '支付成功，等待卖家发货！'})
+        //   })
+        // })
+      },
+      certain(index) {
+        const self = this
+        wepy.showModal({
+          content: '确认收货？'
+          // confirmText: '取消订单',
+          // confirmColor: '#676767',
+          // cancelText: '继续购物',
+          // cancelColor: '#D49364'
+        }).then((res) => {
+          if (res.cancel) {
+
+          } else {
+            self.obj[index].kind = 0
+            self.$apply()
+          }
+        })
+      },
+      cancelCard(index) {
+        wepy.showModal({
+          content: '\r\n确定要取消订单吗？',
+          confirmText: '取消订单',
+          confirmColor: '#676767',
+          cancelText: '继续购物',
+          cancelColor: '#D49364'
+        }).then((res) => {
+          if (res.cancel) {
+            console.log('success')
+          } else {
+            console.log('fail')
+          }
+        })
+      },
+      alertSend(index) {
+        wepy.showToast({title: '已提醒发货！'})
+      },
+      lookWhere(index) {
+        wepy.navigateTo({
+          url: 'wuliu'
+        })
+      },
+      gopage(index) {
+        wepy.navigateTo({
+          url: 'cardDetail'
+        })
+      },
+      emite(index) {
+        console.log(this.obj)
+      }
+    }
+    events = {
+      'ceshievent': (...args) => {
+        console.log('cs2' + args)
+      }
+    }
+    onLoad() {
+      console.log(this.obj)
+    }
+  }
+</script>

@@ -1,0 +1,311 @@
+<style lang="less">
+@import "../utils/pt2rem.less";
+.container-page{
+  text-align: center;
+  height: 100%;
+  background: #F5F5F5;
+  .baseInfo{
+    .formLine{
+      display: flex;
+      background: white;
+      padding: 10/@p 15/@p 10/@p 7/@p ;
+      .icon{
+        align-self: center;
+        width: 26/@p;
+        height: 26/@p;
+      }
+      .text{
+        margin-left: 12/@p;
+        align-self: center;
+        flex: 1;
+        color: #676767;
+        font-size: 15/@p;
+        text-align: left;
+        .user{
+          display: flex;
+
+          justify-content: space-between;
+        }
+        .address{
+
+        }
+      }
+      +.formLine{
+        border-top: 1px solid #EEEEEE;
+      }
+    }
+  }
+  .detail{
+    background: white;
+    margin-top: 10/@p;
+    .itemContent{
+      border-bottom: 1px solid #EEEEEE;
+      display: flex;
+      padding: 15/@p 13/@p 0 8/@p;
+      .pic{
+        width: 86/@p;
+        height: 86/@p;
+        image{
+          width: 100%;
+          height: 73/@p;
+          align-self: center;
+        }
+      }
+      .detail{
+        flex: 1;
+        margin: 0 15/@p;
+        text-align: left;
+        .title{
+          color: #333333;
+          font-size: 14/@p;
+        }
+        .des{
+          color: #9B9B9B;
+          font-size: 12/@p;
+        }
+      }
+      .status{
+        // width: 70/@p;
+        text-align: right;
+        .price{
+          color: #111111;
+          font-size: 14/@p;
+        }
+        .num{
+          color: #9B9B9B;
+          font-size: 11/@p;
+        }
+      }
+    }
+
+
+  }
+  .formRow{
+    margin: 0 11/@p;
+    display: flex;
+    justify-content: space-between;
+    height: 40/@p;
+    line-height: 40/@p;
+    font-size: 15/@p;
+    .title{
+      color: #7B7B7B;
+    }
+    .content{
+      color: #111111;
+    }
+    .paynum{
+      color: #D49364;
+    }
+  }
+  .btop{
+    border-top: 1px solid #EEEEEE;
+  }
+  .infos{
+    background: white;
+    margin-top: 10/@p;
+    .formRow{
+      .content{
+        color: #7B7B7B;
+      }
+    }
+  }
+  .options{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 51/@p;
+    background: white;
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 13/@p;
+    text-align: center;
+    >view{
+      align-self: center;
+      border-radius: 14/@p;
+      height: 28/@p;
+      line-height: 28/@p;
+      width: 75/@p;
+      margin-right: 16/@p;
+    }
+
+    .cancel{
+      border: 1px solid #9B9B9B;
+      color: #9B9B9B;
+    }
+    .pay{
+      border: 1px solid #D49364;
+      color: #D49364;
+    }
+    .spStyle{
+      height: 51/@p;
+      line-height: 51/@p;
+      border-radius: 0;
+      margin-right: 0;
+      width: 110/@p;
+      border: none;
+      color: white;
+      font-size: 15/@p;
+    }
+    .bbk{
+      background: #1E1F24;
+      // &:active{
+      //   background: red;
+      // }
+    }
+
+    .gbk{
+      background: #BBBBBB;
+    }
+  }
+}
+</style>
+<template>
+  <view class="container-page">
+    <view class="baseInfo">
+      <view class="formLine">
+        <image class="icon" src='https://cdn.quansuwangluo.com/shuimeiren/group.png'/>
+        <view class="text">待支付</view>
+      </view>
+      <view class="formLine">
+        <image class="icon" src='https://cdn.quansuwangluo.com/shuimeiren/pos.png'/>
+        <view class="text">
+          <view class="user">
+            <view class="name">{{'收货人：' + infos.name}}</view>
+            <view class="mobile">{{infos.mobile}}</view>
+          </view>
+          <view class="address">{{'收货地址：' + infos.address}}</view>
+        </view>
+      </view>
+      <view class="formLine">
+        <image class="icon" src='https://cdn.quansuwangluo.com/shuimeiren/msg.png'/>
+        <view class="text">{{'备注：'+ infos.bei}}</view>
+      </view>
+    </view>
+    <view class="detail">
+      <view class="itemContent">
+        <view class="pic">
+          <image src="{{goodsInfo.icon}}"/>
+        </view>
+        <view class="detail">
+          <view class="title">{{goodsInfo.gname}}</view>
+          <view class="des">{{goodsInfo.gsize}}</view>
+        </view>
+        <view class="status">
+          <view class="price">{{'￥ ' + goodsInfo.gPrice}}</view>
+          <view class="num">{{'X ' + goodsInfo.gNum }}</view>
+        </view>
+      </view>
+      <view class="formRow">
+        <view class="title">商品总价</view>
+        <view class="content">{{'￥ ' + goodsInfo.totalPrice}}</view>
+      </view>
+      <view class="formRow btop">
+        <view class="title">商品运费</view>
+        <view class="content">{{'￥ ' + goodsInfo.yunfei}}</view>
+      </view>
+      <view class="formRow btop">
+        <view class="title">支付金额</view>
+        <view class="content paynum">{{'￥ ' + goodsInfo.order}}</view>
+      </view>
+    </view>
+    <view class="infos">
+      <view class="formRow">
+        <view class="title">订单号</view>
+        <view class="content">{{goodsInfo.cardNum}}</view>
+      </view>
+      <view class="formRow">
+        <view class="title">下单时间</view>
+        <view class="content">{{goodsInfo.cardTime}}</view>
+      </view>
+    </view>
+    <view wx:if='{{kind !== 0}}' class="options">
+      <view wx:if='{{kind == 1}}' class="pay spStyle bbk"  @tap.stop="goPay">去支付</view>
+      <view wx:if='{{kind == 3}}' class="pay"  @tap.stop="certain">确认收货</view>
+      <view wx:if='{{kind == 1}}' class="cancel spStyle gbk"  @tap.stop="cancelCard">取消订单</view>
+      <view wx:if='{{kind == 2}}' class="cancel"  @tap.stop="alertSend">提醒发货</view>
+      <view wx:if='{{kind == 3}}' class="cancel"  @tap.stop="lookWhere">查看物流</view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class CardDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的订单'
+  }
+  components = {
+  }
+  data = {
+    kind: 2,
+    infos: {
+      name: 'lasdj',
+      mobile: 123456789,
+      address: '山东省临沂市河东区金华路2号沐熙集团',
+      bei: '请尽快发货'
+    },
+    goodsInfo: {
+      icon: '../images/avatar/sls.jpg',
+      gname: '睡美人小分子易吸收胶原蛋白 液态饮品一盒6',
+      gsize: '一盒6瓶',
+      gPrice: '358.90',
+      gNum: '1',
+      totalPrice: '358.90',
+      yunfei: '358.90',
+      order: '358.90',
+      cardNum: '23742398493826489',
+      cardTime: '2019-01-22 11:36:00'
+    }
+  }
+  methods = {
+    goPay() {
+      // getData({ num: '312' }).then((res) => {
+      //   wepy.requestPayment(res.data).then((res2) => {
+      //     wepy.showToast({title: '支付成功，等待卖家发货！'})
+      //   })
+      // })
+    },
+    certain() {
+      const self = this
+      wepy.showModal({
+        content: '确认收货？'
+        // confirmText: '取消订单',
+        // confirmColor: '#676767',
+        // cancelText: '继续购物',
+        // cancelColor: '#D49364'
+      }).then((res) => {
+        if (res.cancel) {
+
+        } else {
+          self.kind = 0
+          self.$apply()
+        }
+      })
+    },
+    cancelCard() {
+      wepy.showModal({
+        content: '确定要取消订单吗？',
+        confirmText: '取消订单',
+        confirmColor: '#676767',
+        cancelText: '继续购物',
+        cancelColor: '#D49364'
+      }).then((res) => {
+        if (res.cancel) {
+          console.log('success')
+        } else {
+          console.log('fail')
+        }
+      })
+    },
+    alertSend() {
+      wepy.showToast({title: '已提醒发货！'})
+    },
+    lookWhere() {
+      wepy.navigateTo({
+        url: 'wuliu'
+      })
+    }
+  }
+}
+</script>

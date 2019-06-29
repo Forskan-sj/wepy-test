@@ -20,7 +20,7 @@
 </style>
 <template>
   <view class="container">
-    <input value='{{mynum}}' @input="showNum" type="text">
+    <input value='{{mynum}}' @input="showNum" type="text"/>
     <view class="asdf">{{ mynum }}</view>
     <view @tap="getParam({{ mynum }}, 's2', 'sdf')">获取参数</view>
     <view class="userinfo" @tap="ceshiEvent">
@@ -31,6 +31,11 @@
     <ceshi2></ceshi2>
     <button @tap="addNum">wepy redux add</button>
     <button @tap="getNUm">getInputNum</button>
+     <van-button type="default">默认按钮</van-button>
+        <van-button type="primary">主要按钮</van-button>
+        <van-button type="warning">警告按钮</van-button>
+        <van-button type="danger">危险按钮</van-button>
+
   </view>
 </template>
 
@@ -57,7 +62,10 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: 'test',
+      usingComponents: {
+        'van-button': '../components/van/button/index'
+      }
     }
     components = {
       ceshi1,
